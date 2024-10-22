@@ -22,7 +22,7 @@ export class AuthService {
     return {
       user,
       backendTokens: {
-        acessToken: await this.jwtService.signAsync(payload, {
+        accessToken: await this.jwtService.signAsync(payload, {
           expiresIn: '1h',
           secret: process.env.jwtSecretKey,
         }),
@@ -45,5 +45,22 @@ export class AuthService {
       return result;
     }
     throw new UnauthorizedException('password does not match');
+  }
+
+  async refreshToken(user: any) {
+    const payload = {
+      username: user.username,
+      sub: user.sub,
+    };
+    return {
+      accessToken: await this.jwtService.signAsync(payload, {
+        expiresIn: '1h',
+        secret: process.env.jwtSecretKey,
+      }),
+      refreshToken: await this.jwtService.signAsync(payload, {
+        expiresIn: '7d',
+        secret: process.env.jwtRefreshTokenKey,
+      }),
+    };
   }
 }
