@@ -56,8 +56,8 @@ export const Button = ({
       {...props}
       type={type}
       className={`
-   
-          ${getVariant(variant)}  transition duration-75  ${
+ 
+        ${getVariant(variant)}  transition duration-75  ${
         !paddingLess && "py-2 px-4"
       }  ${!square && "rounded-md"} active:scale-95 ${className} `}
     >
